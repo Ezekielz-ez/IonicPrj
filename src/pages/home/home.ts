@@ -18,6 +18,9 @@ export class HomePage {
 
   onCatClick(x: Pic) {
     console.log(x.filename + ' ' + x.title);
+    this.mediaProvider.getSingleMedia(x.file_id).subscribe(data => {
+      console.log(data);
+    });
   }
 
   ionViewDidLoad() {
@@ -26,19 +29,15 @@ export class HomePage {
 
   getAllFile() {
     this.mediaProvider.getAllMedia().subscribe(data => {
+      data.forEach(pic => {
+        this.mediaProvider.getSingleMedia(pic.file_id).subscribe(singleData => {
+          console.log(singleData);
+          pic.thumbnails = singleData.thumbnails;
+        });
+      });
       this.picArray = data;
     });
+    console.log('xxxxx');
     console.log(this.picArray);
-    /*this.httpClient.get<Pic[]>('http://media.mw.metropolia.fi/wbma/media').subscribe(
-      data => {
-        console.log(data);
-        data.forEach(element => {
-          console.log('http://media.mw.metropolia.fi/wbma/uploads/' + element.filename.split('.')[0] + '-tn160.png');
-        });
-        this.picArray = data;
-
-      }, error => {
-        console.log(error);
-      });*/
   }
 }

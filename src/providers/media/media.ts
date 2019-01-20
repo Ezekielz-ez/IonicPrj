@@ -13,6 +13,7 @@ import { Pic } from '../../interface/pic';
 @Injectable()
 export class MediaProvider {
   picArray: Pic[];
+  picSingle: Pic;
   constructor(public http: HttpClient) {
     console.log('Hello MediaProvider Provider');
   }
@@ -23,5 +24,9 @@ export class MediaProvider {
       console.log(data);
     });
     return this.http.get<Pic[]>('http://media.mw.metropolia.fi/wbma/media');
+  }
+
+  getSingleMedia(id: number): Observable<Pic> {
+    return this.http.get<Pic>('http://media.mw.metropolia.fi/wbma/media/' + id);
   }
 }
