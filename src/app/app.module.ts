@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { MediaProvider } from '../providers/media/media';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { HomePage } from '../pages/home/home';
     StatusBar,
     SplashScreen,
     HttpClientModule,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    MediaProvider
   ]
 })
 export class AppModule {}

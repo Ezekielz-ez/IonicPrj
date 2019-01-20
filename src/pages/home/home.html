@@ -10,10 +10,10 @@
   <ion-list>
     <ion-item *ngFor="let image of picArray">
       <ion-thumbnail item-start>
-        <img [src]="image.thumbnail">
+        <img [src]="'http://media.mw.metropolia.fi/wbma/uploads/'+image.filename.split('.')[0]+'-tn160.png'">
       </ion-thumbnail>
       <h2>{{ image.title }}</h2>
-      <p>{{ image.detail }}</p>
+      <p>{{ image.description }}</p>
       <button ion-button clear item-end (click)="onCatClick(image)">View</button>
     </ion-item>
   </ion-list>
