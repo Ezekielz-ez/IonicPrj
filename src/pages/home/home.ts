@@ -3,13 +3,14 @@ import { NavController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { Pic } from '../../interface/pic';
 import { MediaProvider } from '../../providers/media/media';
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  picArray: Pic[];
+  picArray: Pic[] = [];
   constructor(public navCtrl: NavController, public httpClient: HttpClient, public mediaProvider: MediaProvider) {
   }
 
@@ -21,6 +22,7 @@ export class HomePage {
     this.mediaProvider.getSingleMedia(x.file_id).subscribe(data => {
       console.log(data);
     });
+    this.getAllFile();
   }
 
   ionViewDidLoad() {
@@ -28,16 +30,11 @@ export class HomePage {
   }
 
   getAllFile() {
-    this.mediaProvider.getAllMedia().subscribe(data => {
-      data.forEach(pic => {
-        this.mediaProvider.getSingleMedia(pic.file_id).subscribe(singleData => {
-          console.log(singleData);
-          pic.thumbnails = singleData.thumbnails;
-        });
-      });
-      this.picArray = data;
+    this.mediaProvider.getAllMedia().subscribe(file => {
+      file.forEach(pic => {
+        this.mediaProvider.getSingleMedia(pic.file_id).subscribe(singlePic => {
+          this.picArray.push(singlePic);
+        }); });
     });
-    console.log('xxxxx');
-    console.log(this.picArray);
   }
 }

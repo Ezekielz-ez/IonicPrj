@@ -8,9 +8,9 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item *ngFor="let image of picArray">
+    <ion-item *ngFor="let image of picArray" >
       <ion-thumbnail item-start>
-        <img *ngIf="image.thumbnails" [src]="'http://media.mw.metropolia.fi/wbma/uploads/'+image.thumbnails[160]" [alt]="image.description">
+        <img [src]="'http://media.mw.metropolia.fi/wbma/uploads/'+image.thumbnails[160]" [alt]="image.description">
       </ion-thumbnail>
       <h2>{{ image.title }}</h2>
       <p>{{ image.description }}</p>
