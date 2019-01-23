@@ -9,5 +9,10 @@ export interface Pic {
     mime_type: string;
     time_added: string;
     screenshot?: string;
-    thumbnails?: object;
+    thumbnails?: Thumbnails;
     }
+export interface Thumbnails {
+  w160: string;
+  w320?: string;
+  w640?: string;
+}

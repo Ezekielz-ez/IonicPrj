@@ -1,0 +1,28 @@
+<!--
+  Generated template for the LoginRegisterPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>login-register</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content padding>
+  <form (ngSubmit)="userLogIn()" *ngIf="!mediaProvider.loginStatus">
+    <ion-item>
+      <ion-label>USERNAME</ion-label>
+      <ion-input [(ngModel)]="userData.username" type="text" name="username"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>PASSWORD</ion-label>
+      <ion-input [(ngModel)]="userData.password" type="password" name="password"></ion-input>
+    </ion-item>
+    <button ion-button type="submit" block>Submit</button>
+  </form>
+
+  <button id="logout" ion-button (click)="userLogOut()" *ngIf="mediaProvider.loginStatus">Log Out</button>
+</ion-content>
