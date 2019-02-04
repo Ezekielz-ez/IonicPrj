@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MediaProvider } from '../../providers/media/media';
 import { HttpClient } from '@angular/common/http';
 import { Pic } from '../../interface/pic';
+import { Observable } from 'rxjs';
 
 /**
  * Generated class for the HomePage page.
@@ -17,11 +18,8 @@ import { Pic } from '../../interface/pic';
   templateUrl: 'home.html',
 })
 export class HomePage {
-  picArray: Pic[] = [];
+  picArray: Observable<Pic[]>;
   constructor(public navCtrl: NavController, public httpClient: HttpClient, public mediaProvider: MediaProvider) {
-  }
-
-  ngOnInit() {
   }
 
   onCatClick(x: Pic) {
@@ -37,12 +35,6 @@ export class HomePage {
   }
 
   getAllFile() {
-    this.mediaProvider.getAllMedia().subscribe(file => {
-      file.forEach(pic => {
-        this.mediaProvider.getSingleMedia(pic.file_id).subscribe(singlePic => {
-          this.picArray.push(singlePic);
-        }); });
-    });
+    this.picArray = this.mediaProvider.getAllMedia();
   }
-
 }

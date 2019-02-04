@@ -16,7 +16,11 @@ import { MediaProvider } from '../../providers/media/media';
   templateUrl: 'register.html',
 })
 export class RegisterPage {
-  valid = false;
+  emailValid = false; emailInput = false;
+  passwordValid = false; passwordInput = false; passwordLengthValid = false;
+  userValid = false; userInput = false;
+  formValid = false;
+  secondPassword = '';
   userData: User = {
     'username' : '',
     'email' : '',
@@ -24,34 +28,55 @@ export class RegisterPage {
   };
   constructor(public navCtrl: NavController, public navParams: NavParams, public mediaProvider: MediaProvider) {
   }
-
+  // start page
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
   }
   // register new user
   userRegister() {
     console.log('new user');
-    this.mediaProvider.checkUsername(this.userData.username).subscribe(res => {
-      if (res.available === true) {
-        this.mediaProvider.registerUser(this.userData).subscribe(res => {
-          console.log(res);
-          this.mediaProvider.logUserIn({ 'username': this.userData.username, 'password': this.userData.password}).subscribe(res => {
-            if (res.message === 'Logged in successfully') {
-              console.log('uhuh!!!!');
-              this.mediaProvider.rememberToken(res.token);
-              this.navCtrl.parent.select(0);
-            } else {
-              console.log('nooooooo');
-            }
-          });
-        }, err => {console.log(err);
-        });
-      } else {
-
-      }
+    this.mediaProvider.registerUser(this.userData).subscribe(response => {
+      console.log(response);
+      this.mediaProvider.logUserIn({ 'username': this.userData.username, 'password': this.userData.password }).subscribe(res => {
+        if (res.message === 'Logged in successfully') {
+          console.log('uhuh!!!!');
+          this.mediaProvider.rememberToken(res.token);
+          this.navCtrl.parent.select(0);
+        } else {
+          console.log('nooooooo');
+        }
+      });
+    }, err => {console.log(err);
     });
   }
-
+  // checking user name on press
+  usernameCheck() {
+    this.userInput = true;
+    this.mediaProvider.checkUsername(this.userData.username).subscribe(res => {
+      this.userValid = (res.available === true && this.userData.username.length > 3);
+      this.formCheck();
+    });
+    console.log('click');
+  }
+  // matching password check
+  passwordCheck() {
+    this.passwordInput = true;
+    this.passwordValid = (this.secondPassword === this.userData.password);
+    this.passwordLengthValid = (this.userData.password.length > 4);
+    console.log(this.passwordValid);
+    this.formCheck();
+  }
+  // checking email
+  emailCheck() {
+    this.emailInput = true;
+    this.emailValid = this.userData.email.match('^[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$') !== null;
+    console.log(this.userData.email.match('^[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$'));
+    this.formCheck();
+  }
+  // checking the entirety of the form
+  formCheck() {
+    this.formValid = this.userValid && this.emailValid && this.passwordValid && this.passwordLengthValid;
+  }
 }
 
 

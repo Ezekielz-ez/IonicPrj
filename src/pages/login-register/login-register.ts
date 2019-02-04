@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { User } from '../../interface/user';
 import { MediaProvider } from '../../providers/media/media';
 import { Storage } from '@ionic/storage';
-import { HomePage } from '../home/home';
+import { RegisterPage } from '../register/register';
 
 /**
  * Generated class for the LoginRegisterPage page.
@@ -29,13 +29,14 @@ export class LoginRegisterPage {
     console.log('ionViewDidLoad LoginRegisterPage');
     if (!this.mediaProvider.checkAuto()) {
       this.storage.get('token').then(token => {
-        this.mediaProvider.autoLogin(token).subscribe(res => {
-          this.storage.set('current-user', res).then(result => {
+        this.mediaProvider.autoLogin(token).subscribe(response => {
+          this.storage.set('current-user', response).then(result => {
+            console.log(result);
             this.mediaProvider.setLogIn();
             this.navCtrl.parent.select(0);
-          });
+          }).catch(error => console.log(error));
         });
-      }, err => console.log(err));
+      }, err => console.log(err)).catch(err => console.log(err));
     }
   }
   // use for loggin user in
@@ -43,16 +44,19 @@ export class LoginRegisterPage {
     this.mediaProvider.logUserIn(this.userData).subscribe(res => {
       if (res.message === 'Logged in successfully') {
         console.log('uhuh!!!!');
-        this.mediaProvider.rememberToken(res.token);
-        this.navCtrl.parent.select(0);
+        this.storage.set('current-user', res).then(() => {
+          this.storage.set('token', res.token).then(() => {
+            this.mediaProvider.setLogIn();
+            this.navCtrl.parent.select(0);
+          });
+        }).catch(err => console.log(err));
       } else {
         console.log('nooooooo');
       }
     });
   }
-  // logging user out, also testing performance of storage
-  userLogOut() {
-    console.log('logging out');
-    this.mediaProvider.logUserOut();
+  // go to registerpage
+  goToRegister() {
+    this.navCtrl.push(RegisterPage).catch(err => console.log(err));
   }
 }

@@ -14,6 +14,8 @@ import { RegisterPage } from '../pages/register/register';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { MediaProvider } from '../providers/media/media';
+import { PipesModule } from '../pipes/pipes.module';
+import { ThumbnailPipe } from '../pipes/thumbnail/thumbnail';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { MediaProvider } from '../providers/media/media';
   imports: [
     BrowserModule,
     HttpClientModule,
+    PipesModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],
@@ -43,6 +46,8 @@ import { MediaProvider } from '../providers/media/media';
     StatusBar,
     SplashScreen,
     HttpClientModule,
+    PipesModule,
+    ThumbnailPipe,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     MediaProvider,
   ]

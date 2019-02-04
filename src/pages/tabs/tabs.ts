@@ -4,7 +4,7 @@ import { IonicPage, NavController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { LoginRegisterPage } from '../login-register/login-register';
 import { MediaProvider } from '../../providers/media/media';
-import { RegisterPage } from '../register/register';
+import { LogoutPage } from '../logout/logout';
 
 /**
  * Generated class for the TabsPage tabs.
@@ -22,7 +22,7 @@ export class TabsPage {
 
   homeRoot = HomePage;
   loginRegisterRoot = LoginRegisterPage;
-  registerRoot = RegisterPage;
+  logoutRoot = LogoutPage;
   constructor(public navCtrl: NavController, public mediaProvider: MediaProvider) {}
 
 }

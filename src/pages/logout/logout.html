@@ -14,5 +14,11 @@
 
 
 <ion-content padding>
+  <div id="profile-box">
+    <img [src]="'http://media.mw.metropolia.fi/wbma/uploads/' + (profile_id | thumbnail: 'medium' | async)" alt="profile pic">
+    <p>{{ currentUser.username }}</p>
+    <p>{{ currentUser.email }}</p>
+    <button ion-button (click)="userLogOut()">Log Out</button>
+  </div>
 
 </ion-content>

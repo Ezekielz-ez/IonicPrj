@@ -6,6 +6,7 @@ import { User } from '../../interface/user';
 import { ServerResponse } from '../../interface/response';
 import { Storage } from '@ionic/storage';
 
+
 // import { of } from 'rxjs/observable/of';
 
 /*
@@ -33,6 +34,27 @@ export class MediaProvider {
   getSingleMedia(id: number): Observable<Pic> {
     return this.http.get<Pic>(this.endPoint + 'media/' + id);
   }
+  // get thumbnail
+  getFileThumbnail(id: number, size: string) {
+    return new Promise(resolve => {
+      this.getSingleMedia(id).subscribe(res => {
+        switch (size) {
+          case 'small':
+            resolve(res.thumbnails.w160);
+            break;
+          case 'medium':
+            resolve(res.thumbnails.w320);
+            break;
+          case 'large':
+            resolve(res.thumbnails.w640);
+            break;
+          default:
+            resolve(res.thumbnails.w160);
+            break;
+        }
+      });
+    });
+  }
   // send user logging in
   logUserIn(data: User): Observable<any> {
     console.log(this.endPoint + 'login/');
@@ -53,10 +75,11 @@ export class MediaProvider {
   logUserOut() {
     this.loginStatus = false;
     this.storage.get('token').then(result => {
+      console.log('logging out');
       console.log(result);
       this.storage.set('token', '').then(ans => {
         console.log(ans);
-        this.storage.set('current-user', '').catch(err => console.log(err));
+        this.storage.set('current-user', null).catch(err => console.log(err));
       }, err => console.log(err));
     }, error => console.log(error));
   }
@@ -84,6 +107,28 @@ export class MediaProvider {
   registerUser(data: User) {
     return this.http.post(this.endPoint + 'users', data, {
       headers: { 'Content-Type': 'application/json' }
+    });
+  }
+  // get profile pic
+  getProfilePic(id: number) {
+    console.log('userid: ' + id);
+    return new Promise(resolve => {
+      this.http.get<Pic[]>(this.endPoint + 'tags/xprofile').subscribe(res => {
+        console.log('xxxxxxxxxxxxxxxxx');
+        console.log(res);
+        res.forEach(pic => {
+          if (pic.user_id === id) {
+            console.log(pic.user_id);
+            resolve(pic.file_id);
+          }
+        });
+      });
+    });
+  }
+  // get userdata
+  getUserData(token): Observable<any> {
+    return this.http.get(this.endPoint + 'users/user', {
+      headers: { 'x-access-token': token }
     });
   }
 }

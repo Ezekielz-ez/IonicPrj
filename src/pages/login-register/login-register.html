@@ -23,6 +23,5 @@
     </ion-item>
     <button ion-button type="submit" block>Submit</button>
   </form>
-
-  <button id="logout" ion-button (click)="userLogOut()" *ngIf="mediaProvider.loginStatus">Log Out</button>
+  <button *ngIf="!mediaProvider.loginStatus" ion-button (click)="goToRegister()" block>Register</button>
 </ion-content>

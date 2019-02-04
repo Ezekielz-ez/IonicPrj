@@ -1,3 +1,5 @@
+import { DateTime } from 'ionic-angular';
+
 export interface Pic {
     file_id: number;
     filename: string;
@@ -7,7 +9,7 @@ export interface Pic {
     user_id: number;
     media_type: string;
     mime_type: string;
-    time_added: string;
+    time_added: DateTime;
     screenshot?: string;
     thumbnails?: Thumbnails;
     }

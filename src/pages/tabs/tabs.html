@@ -1,5 +1,5 @@
 <ion-tabs selectedIndex="1">
     <ion-tab [root]="homeRoot" tabIcon="home"></ion-tab>
-    <ion-tab [root]="loginRegisterRoot" tabIcon="contact"></ion-tab>
-    <ion-tab [root]="registerRoot" tabIcon="play"></ion-tab>
+    <ion-tab [root]="loginRegisterRoot" tabIcon="contact" [show]="!mediaProvider.loginStatus"></ion-tab>
+    <ion-tab [root]="logoutRoot" tabIcon="contact" [show]="mediaProvider.loginStatus"></ion-tab>
 </ion-tabs>
