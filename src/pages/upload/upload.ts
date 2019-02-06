@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
 import { MediaProvider } from '../../providers/media/media';
 import { Storage } from '@ionic/storage';
-import { FileEntry } from '@ionic-native/file';
 
 /**
  * Generated class for the UploadPage page.
@@ -25,6 +24,8 @@ export class UploadPage {
   formData: FormData;
   isImage = false; isAudio = false; isVideo = false;
   pathToFile = '';
+  brightness = 100; contrast = 100; saturation = 100; sepia = 0;
+  filter = 'matrix';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private mediaProvider: MediaProvider, private storage: Storage, private loadCtrl: LoadingController) {
   }
@@ -42,7 +43,7 @@ export class UploadPage {
     this.formData = new FormData();
     this.formData.append('file', this.file);
     this.formData.append('title', this.title);
-    this.formData.append('description', this.description);
+    this.formData.append('description', this.description + '.......imageFilter:' + this.brightness + '..' + this.saturation + '..' + this.saturation + '..' + this.sepia);
     this.storage.get('token').then(token => {
       this.mediaProvider.sendMedia(this.formData, token).subscribe(res => {
         console.log(res);
@@ -70,7 +71,9 @@ export class UploadPage {
       const reader = new FileReader();
       reader.onloadend = (evt) => {
         console.log('read success');
+        // @ts-ignore
         console.log(evt.target.result);
+        // @ts-ignore
         this.pathToFile = evt.target.result;
       };
       reader.readAsDataURL(event.target.files[0]);
@@ -79,5 +82,21 @@ export class UploadPage {
   // title checking not null
   checkTitle() {
     this.titleValid = this.title !== '';
+  }
+  // junolize the image
+  junolize() {
+    this.brightness = 114;
+    this.contrast = 120;
+    this.saturation = 134;
+    this.sepia = 0;
+    this.filter = 'warmth';
+  }
+  // normalize pic
+  normalize() {
+    this.brightness = 100;
+    this.contrast = 100;
+    this.saturation = 100;
+    this.sepia = 0;
+    this.filter = 'matrix';
   }
 }

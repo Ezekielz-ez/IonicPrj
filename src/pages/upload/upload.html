@@ -4,6 +4,7 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
+
 <ion-header>
 
   <ion-navbar>
@@ -14,6 +15,25 @@
 
 
 <ion-content padding>
+  <svg preserveAspectRatio="xMidYMid meet"
+       xmlns="http://www.w3.org/2000/svg">
+    <filter id="matrix">
+      <feColorMatrix in="SourceGraphic"
+                     type="matrix"
+                     values="1 0 0 0 0
+                             0 1 0 0 0
+                             0 0 1 0 0
+                             0 0 0 1 0"></feColorMatrix>
+    </filter>
+    <filter id="warmth">
+      <feColorMatrix in="SourceGraphic"
+                     type="matrix"
+                     values="1 0 0.5 0 0
+                             0 1 0 0 0
+                             0 0 1 0 0
+                             0 0 0 1 0"></feColorMatrix>
+    </filter>
+  </svg>
   <form (ngSubmit)="uploadFile()">
     <ion-item>
       <ion-input type="file" (change)="checkFile($event)"></ion-input>
@@ -32,7 +52,40 @@
     </ion-item>
     <button ion-button type="submit" block *ngIf="fileValid&&titleValid">Upload</button>
   </form>
-  <img *ngIf="isImage" [src]="pathToFile" alt="Jace Beleren">
+  <img *ngIf="isImage" [src]="pathToFile" [ngStyle]="{'filter': 'brightness(' + brightness + '%) contrast(' + contrast + '%) saturate(' + saturation + '%) sepia(' + sepia + '%) url(#'+ filter + ')'}" alt="Jace Beleren">
   <img *ngIf="isAudio||isVideo" src="https://upload.wikimedia.org/wikipedia/en/d/d1/Bayonetta_Bayo2_render.png" alt="Bayonetta">
-
+  <ion-list>
+    <ion-item>
+      <button (click)="junolize()">JUNO</button>
+      <button (click)="normalize()">NORMAL</button>
+    </ion-item>
+    <ion-item>
+      <ion-label>BRIGHTNESS</ion-label>
+      <ion-range min="0" max="350" step="1" [(ngModel)]="brightness">
+        <ion-icon small range-left name="sunny"></ion-icon>
+        <ion-icon range-right name="sunny"></ion-icon>
+      </ion-range>
+    </ion-item>
+    <ion-item>
+      <ion-label>CONTRAST</ion-label>
+      <ion-range min="0" max="250" step="1" [(ngModel)]="contrast">
+        <ion-icon small range-left name="contrast"></ion-icon>
+        <ion-icon range-right name="contrast"></ion-icon>
+      </ion-range>
+    </ion-item>
+    <ion-item>
+      <ion-label>SATURATION</ion-label>
+      <ion-range min="0" max="250" step="1" [(ngModel)]="saturation">
+        <ion-icon small range-left name="water"></ion-icon>
+        <ion-icon range-right name="water"></ion-icon>
+      </ion-range>
+    </ion-item>
+    <ion-item>
+      <ion-label>SEPIA</ion-label>
+      <ion-range min="0" max="100" step="1" [(ngModel)]="sepia">
+        <ion-icon small range-left name="thermometer"></ion-icon>
+        <ion-icon range-right name="thermometer"></ion-icon>
+      </ion-range>
+    </ion-item>
+  </ion-list>
 </ion-content>
