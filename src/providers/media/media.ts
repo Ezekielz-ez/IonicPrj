@@ -131,4 +131,10 @@ export class MediaProvider {
       headers: { 'x-access-token': token }
     });
   }
+  // send media to server
+  sendMedia(formData: FormData, token: string): Observable<any> {
+    return this.http.post(this.endPoint + 'media', formData,{
+      headers: { 'x-access-token': token }
+    });
+  }
 }

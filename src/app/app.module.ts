@@ -12,6 +12,7 @@ import { LoginRegisterPage } from '../pages/login-register/login-register';
 import { LogoutPage } from '../pages/logout/logout';
 import { RegisterPage } from '../pages/register/register';
 import { TabsPage } from '../pages/tabs/tabs';
+import { UploadPage } from '../pages/upload/upload';
 
 import { MediaProvider } from '../providers/media/media';
 import { PipesModule } from '../pipes/pipes.module';
@@ -24,7 +25,8 @@ import { ThumbnailPipe } from '../pipes/thumbnail/thumbnail';
     RegisterPage,
     HomePage,
     LogoutPage,
-    TabsPage
+    TabsPage,
+    UploadPage
   ],
   imports: [
     BrowserModule,
@@ -40,6 +42,7 @@ import { ThumbnailPipe } from '../pipes/thumbnail/thumbnail';
     RegisterPage,
     HomePage,
     LogoutPage,
+    UploadPage,
     TabsPage
   ],
   providers: [

@@ -4,6 +4,7 @@ import { MediaProvider } from '../../providers/media/media';
 import { HttpClient } from '@angular/common/http';
 import { Pic } from '../../interface/pic';
 import { Observable } from 'rxjs';
+import {UploadPage} from "../upload/upload";
 
 /**
  * Generated class for the HomePage page.
@@ -33,8 +34,15 @@ export class HomePage {
   ionViewDidLoad() {
     this.getAllFile();
   }
+  ionViewWillEnter() {
+    this.getAllFile();
+  }
 
   getAllFile() {
     this.picArray = this.mediaProvider.getAllMedia();
+  }
+  // go to upload page
+  goToUpload() {
+    this.navCtrl.push(UploadPage).catch(err => console.log(err));
   }
 }

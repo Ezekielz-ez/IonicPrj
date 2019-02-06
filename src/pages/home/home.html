@@ -7,6 +7,7 @@
 </ion-header>
 
 <ion-content padding>
+  <button ion-button block (click)="goToUpload()">Upload</button>
   <ion-list>
     <ion-item *ngFor="let image of picArray | async" >
       <ion-thumbnail item-start>
