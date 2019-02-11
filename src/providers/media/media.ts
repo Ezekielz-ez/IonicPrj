@@ -38,19 +38,24 @@ export class MediaProvider {
   getFileThumbnail(id: number, size: string) {
     return new Promise(resolve => {
       this.getSingleMedia(id).subscribe(res => {
-        switch (size) {
-          case 'small':
-            resolve(res.thumbnails.w160);
-            break;
-          case 'medium':
-            resolve(res.thumbnails.w320);
-            break;
-          case 'large':
-            resolve(res.thumbnails.w640);
-            break;
-          default:
-            resolve(res.thumbnails.w160);
-            break;
+        console.log(res);
+        if (res.media_type !== 'audio') {
+          switch (size) {
+            case 'small':
+              resolve(res.thumbnails.w160);
+              break;
+            case 'medium':
+              resolve(res.thumbnails.w320);
+              break;
+            case 'large':
+              resolve(res.thumbnails.w640);
+              break;
+            default:
+              resolve(res.thumbnails.w160);
+              break;
+          }
+        } else {
+          resolve('3ff7578f1f1c2c6e903aca1e319fb9cf-tn160.png');
         }
       });
     });
@@ -133,7 +138,7 @@ export class MediaProvider {
   }
   // send media to server
   sendMedia(formData: FormData, token: string): Observable<any> {
-    return this.http.post(this.endPoint + 'media', formData,{
+    return this.http.post(this.endPoint + 'media', formData, {
       headers: { 'x-access-token': token }
     });
   }

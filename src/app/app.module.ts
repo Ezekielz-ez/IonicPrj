@@ -5,7 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
-
+import { Chooser } from '@ionic-native/chooser';
+import { Camera } from '@ionic-native/camera';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginRegisterPage } from '../pages/login-register/login-register';
@@ -51,6 +52,8 @@ import { ThumbnailPipe } from '../pipes/thumbnail/thumbnail';
     HttpClientModule,
     PipesModule,
     ThumbnailPipe,
+    Chooser,
+    Camera,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     MediaProvider,
   ]

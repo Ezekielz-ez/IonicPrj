@@ -12,31 +12,36 @@
   </ion-navbar>
 
 </ion-header>
-
+<svg xmlns="http://www.w3.org/2000/svg">
+  <filter id="matrix">
+    <feColorMatrix in="SourceGraphic"
+                   type="matrix"
+                   values="1 0 0 0 0
+                             0 1 0 0 0
+                             0 0 1 0 0
+                             0 0 0 1 0"></feColorMatrix>
+  </filter>
+  <filter id="warmth">
+    <feColorMatrix in="SourceGraphic"
+                   type="matrix"
+                   values="1 0 0.5 0 0
+                             0 1 0 0 0
+                             0 0 1 0 0
+                             0 0 0 1 0"></feColorMatrix>
+  </filter>
+</svg>
 
 <ion-content padding>
-  <svg preserveAspectRatio="xMidYMid meet"
-       xmlns="http://www.w3.org/2000/svg">
-    <filter id="matrix">
-      <feColorMatrix in="SourceGraphic"
-                     type="matrix"
-                     values="1 0 0 0 0
-                             0 1 0 0 0
-                             0 0 1 0 0
-                             0 0 0 1 0"></feColorMatrix>
-    </filter>
-    <filter id="warmth">
-      <feColorMatrix in="SourceGraphic"
-                     type="matrix"
-                     values="1 0 0.5 0 0
-                             0 1 0 0 0
-                             0 0 1 0 0
-                             0 0 0 1 0"></feColorMatrix>
-    </filter>
-  </svg>
+  <p> {{filename}} </p>
   <form (ngSubmit)="uploadFile()">
-    <ion-item>
+    <ion-item *ngIf="isWindows">
       <ion-input type="file" (change)="checkFile($event)"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="isAndroid">
+      <button type="button" (click)="choose()">Choose</button>
+    </ion-item>
+    <ion-item *ngIf="isAndroid">
+      <button type="button" (click)="takePic()">Take pic</button>
     </ion-item>
     <ion-item *ngIf="fileInput">
       <p style="color: #32db64" *ngIf="fileValid" class="error-msg"> File ok</p>
